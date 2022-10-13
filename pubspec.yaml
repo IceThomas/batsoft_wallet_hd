@@ -11,18 +11,24 @@ dependencies:
   flutter:
     sdk: flutter
 
-  bip39: ^1.0.3
-  bip32: ^1.0.5
+
+  bip39: ^1.0.6
+  bip32: ^2.0.0
   bs58check: ^1.0.1
-  bech32: ^0.1.2
+  bech32: ^0.2.1
   meta: ^1.1.8
-  bitcoin_flutter: ^2.0.1
-  web3dart: ^1.2.3
+  web3dart:
+    git:
+      url: 'https://gitee.com/batsoft888_admin/web3dart.git'
+  bitcoin_flutter:
+    git:
+      url: 'https://github.com/dart-bitcoin/bitcoin_flutter.git'
+      ref: 'master'
   typed_data: ^1.2.0
-  rlp: ^1.0.1
-  crypton: ^1.0.8
-  pointycastle: ^1.0.2
-  hex: ^0.1.2
+  rlp: ^2.0.0
+  crypton: ^2.0.5
+  pointycastle: ^3.4.0
+  hex: ^0.2.0
 
 dev_dependencies:
   flutter_test:
