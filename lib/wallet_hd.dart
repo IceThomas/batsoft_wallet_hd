@@ -23,10 +23,10 @@ class WalletHd {
 
   /// 导入助记词，返回[btc地址 , eth地址] | Import mnemonic words and return [btc address, eth address]
   static Future<Map<String, String>> getAccountAddress(String mnemonic,
-      {String derivePath}) async {
+      {String? derivePath}) async {
     String btcPath = (derivePath != null && derivePath.isNotEmpty)
         ? derivePath
-        : WalletConfig.bitcoinType["BTC"].path;
+        : WalletConfig.bitcoinType["BTC"]!.path;
     bitcoin_flutter.HDWallet hdWalletBtc =
         bitcoin_flutter.HDWallet.fromSeed(bip39.mnemonicToSeed(mnemonic))
             .derivePath(btcPath);
@@ -34,7 +34,7 @@ class WalletHd {
 
     String ethPath = (derivePath != null && derivePath.isNotEmpty)
         ? derivePath
-        : WalletConfig.ethereumType["ETH"].path;
+        : WalletConfig.ethereumType["ETH"]!.path;
     EthPrivateKey ethPrivateKey =
         ethMnemonicToPrivateKey(mnemonic, derivePath: ethPath);
     EthereumAddress ethAddr = await ethPrivateKey.extractAddress();
@@ -45,10 +45,10 @@ class WalletHd {
 
   /// ETH 导入助记词返回私钥 | ETH import mnemonic phrase and return private key
   static EthPrivateKey ethMnemonicToPrivateKey(String mnemonic,
-      {String derivePath}) {
+      {String? derivePath}) {
     String ethPath = (derivePath != null && derivePath.isNotEmpty)
         ? derivePath
-        : WalletConfig.ethereumType["ETH"].path;
+        : WalletConfig.ethereumType["ETH"]!.path;
     bitcoin_flutter.HDWallet hdWalletEth =
         bitcoin_flutter.HDWallet.fromSeed(bip39.mnemonicToSeed(mnemonic))
             .derivePath(ethPath);
@@ -60,11 +60,11 @@ class WalletHd {
   }
 
   /// BTC 导入助记词返回私钥wif | BTC import mnemonic phrase and return private key wif
-  static String btcMnemonicToPrivateKey(String mnemonic, {String derivePath}) {
+  static String btcMnemonicToPrivateKey(String mnemonic, {String? derivePath}) {
     /// BTC 普通地址 | Ordinary address
     String btcPath = (derivePath != null && derivePath.isNotEmpty)
         ? derivePath
-        : WalletConfig.bitcoinType["BTC"].path;
+        : WalletConfig.bitcoinType["BTC"]!.path;
     bitcoin_flutter.HDWallet hdWalletBtc =
         bitcoin_flutter.HDWallet.fromSeed(bip39.mnemonicToSeed(mnemonic))
             .derivePath(btcPath);
