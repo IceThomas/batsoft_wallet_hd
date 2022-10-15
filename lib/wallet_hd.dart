@@ -20,7 +20,9 @@ class WalletHd {
     String randomMnemonic = bip39.generateMnemonic();
     return randomMnemonic;
   }
-
+  static bool validateMnemonic(String mnemonic) {
+    return bip39.validateMnemonic(mnemonic);
+  }
   /// 导入助记词，返回[btc地址 , eth地址] | Import mnemonic words and return [btc address, eth address]
   static Future<Map<String, String>> getAccountAddress(String mnemonic,
       {String? derivePath}) async {
