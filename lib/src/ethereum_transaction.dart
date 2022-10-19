@@ -64,11 +64,7 @@ class EthereumTransaction {
   }
 
   static Future<Etransaction> createErc20Transaction(
-      String from, String to, String value, String gasPrice, int nonce,
-      {String type = 'USDT'}) async {
-    if (WalletConfig.erc20Type.keys.contains(type)) {
-      CoinInfo coinInfo = WalletConfig.erc20Type[type];
-
+      String from, String to, String value, String gasPrice, int nonce,CoinInfo coinInfo) async {
       String operationHex =
           '0xa9059cbb000000000000000000000000' + to.toLowerCase().substring(2);
       String valueHex =
@@ -78,11 +74,9 @@ class EthereumTransaction {
                   valueHex)
               .substring(valueHex.length);
       String dataHex = operationHex + tokenHex;
-
-
       Transaction transaction = new Transaction(
           from: EthereumAddress.fromHex(from),
-          to: EthereumAddress.fromHex(WalletConfig.erc20Type[type].address),
+          to: EthereumAddress.fromHex(coinInfo.address),
           maxGas: coinInfo.gasLimit,
           gasPrice: EtherAmount.inWei(BigInt.parse(gasPrice)),
           value: EtherAmount.zero(),
@@ -90,24 +84,22 @@ class EthereumTransaction {
           nonce: nonce,);
 
       return Etransaction(transaction, coinInfo.network);
-    } else {
-      return null;
-    }
+
   }
 
   static Future<Etransaction> createEthereumTransaction( String fromAddress,
-      String toAddress, String amount, String gasPrice, int nonce) async {
+      String toAddress, String amount, String gasPrice, int maxGas, int nonce,int chainId) async {
     
       Transaction transaction = Transaction(
         from: EthereumAddress.fromHex(fromAddress),
         to: EthereumAddress.fromHex(toAddress),
-        maxGas: 21000,
+        maxGas: maxGas,
         gasPrice: EtherAmount.inWei(BigInt.parse(gasPrice)),
         value: EtherAmount.inWei(numPow2BigInt(double.parse(amount), 18)),
         data: Uint8List(0),
         nonce: nonce,
       );
-      return Etransaction(transaction, 1);
+      return Etransaction(transaction, chainId);
 
     
   }

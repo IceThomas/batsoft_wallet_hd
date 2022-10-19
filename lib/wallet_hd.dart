@@ -1,5 +1,6 @@
 library bat_wallet_hd;
 
+
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bat_wallet_hd/src/bitcoin_transaction.dart';
 import 'package:bat_wallet_hd/src/ethereum_transaction.dart';
@@ -23,6 +24,7 @@ class WalletHd {
   static bool validateMnemonic(String mnemonic) {
     return bip39.validateMnemonic(mnemonic);
   }
+
   /// 导入助记词，返回[btc地址 , eth地址] | Import mnemonic words and return [btc address, eth address]
   static Future<Map<String, String>> getAccountAddress(String mnemonic,
       {String derivePath}) async {
@@ -33,7 +35,6 @@ class WalletHd {
         bitcoin_flutter.HDWallet.fromSeed(bip39.mnemonicToSeed(mnemonic))
             .derivePath(btcPath);
     String btcAddress = hdWalletBtc.address;
-
     String ethPath = (derivePath != null && derivePath.isNotEmpty)
         ? derivePath
         : WalletConfig.ethereumType["ETH"].path;
@@ -41,6 +42,7 @@ class WalletHd {
         ethMnemonicToPrivateKey(mnemonic, derivePath: ethPath);
     EthereumAddress ethAddr = await ethPrivateKey.extractAddress();
     String ethAddress = ethAddr.toString();
+
 
     return {"BTC": btcAddress, "ETH": ethAddress};
   }
@@ -98,18 +100,20 @@ class WalletHd {
 
   /// ETH转账 | ETH transfer
   static Future<String> transactionETH(
-    String mnemonic,
+    String privateKey,
     String fromAddress,
     String toAddress,
     String amount,
     String gasPrice,
+    int maxGas,
     int nonce,
+      int chainId,
   ) async {
-    EthPrivateKey ethPrivateKey = ethMnemonicToPrivateKey(mnemonic);
+    EthPrivateKey ethPrivateKey = EthPrivateKey.fromHex(privateKey);
 
     Etransaction transaction =
         await EthereumTransaction.createEthereumTransaction(
-            fromAddress, toAddress, amount, gasPrice, nonce);
+            fromAddress, toAddress, amount, gasPrice,maxGas, nonce,chainId);
 
     String txPack = await EthereumTransaction.signEthereumTransaction(
         ethPrivateKey, transaction);
@@ -119,17 +123,18 @@ class WalletHd {
 
   /// ERC20USDT转账 | ERC20USDT transfer
   static Future<String> transactionERC20USDT(
-    String mnemonic,
+    String privateKey,
     String fromAddress,
     String toAddress,
     String amount,
     String gasPrice,
     int nonce,
+      CoinInfo coinInfo,
   ) async {
-    EthPrivateKey ethPrivateKey = ethMnemonicToPrivateKey(mnemonic);
+    EthPrivateKey ethPrivateKey = EthPrivateKey.fromHex(privateKey);
 
     Etransaction transaction = await EthereumTransaction.createErc20Transaction(
-        fromAddress, toAddress, amount, gasPrice, nonce);
+        fromAddress, toAddress, amount, gasPrice, nonce,coinInfo);
 
     String txPack = await EthereumTransaction.signEthereumTransaction(
         ethPrivateKey, transaction);

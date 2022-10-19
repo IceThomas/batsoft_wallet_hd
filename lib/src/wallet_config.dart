@@ -12,6 +12,8 @@ class WalletConfig {
   };
   static final Map<String, CoinInfo> ethereumType = {
     'ETH': CoinInfo("m/44'/60'/0'/0/0", 1, 18, gasLimit: 21000),
+    'HECO': CoinInfo("m/44'/60'/0'/0/0", 1, 18, gasLimit: 21000),
+    'BSC': CoinInfo("m/44'/60'/0'/0/0", 1, 18, gasLimit: 21000),
     'ETC': CoinInfo("m/44'/61'/0'/0/0", 1, 18, gasLimit: 21000),
   };
   static final Map<String, CoinInfo> erc20Type = {

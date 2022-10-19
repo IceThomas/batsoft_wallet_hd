@@ -69,10 +69,10 @@ Future testTransactionETH(
 
   /// 新创建的账号初始none是-1 | the new account nonce is -1
   int nonce = -1;
-  String txPack = await WalletHd.transactionETH(
-      mnemonic, fromAddress, toAddress, amount, gasPrice, nonce);
-  print("eth txPack");
-  print(txPack);
+  // String txPack = await WalletHd.transactionETH(
+  //     mnemonic, fromAddress, toAddress, amount, gasPrice, nonce);
+  // print("eth txPack");
+  // print(txPack);
 }
 
 Future testTransactionERC20USDT(
@@ -85,8 +85,8 @@ Future testTransactionERC20USDT(
 
   /// 新创建的账号初始none是-1 | the new account nonce is -1
   int nonce = -1;
-  String txPack = await WalletHd.transactionERC20USDT(
-      mnemonic, fromAddress, toAddress, amount, gasPrice, nonce);
-  print("eth txPack");
-  print(txPack);
+  // String txPack = await WalletHd.transactionERC20USDT(
+  //     mnemonic, fromAddress, toAddress, amount, gasPrice, nonce);
+  // print("eth txPack");
+  // print(txPack);
 }
