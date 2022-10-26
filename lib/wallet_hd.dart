@@ -44,7 +44,7 @@ class WalletHd {
     String ethAddress = ethAddr.toString();
 
 
-    return {"BTC": btcAddress, "ETH": ethAddress};
+    return {"BTC": btcAddress, "ETH": ethAddress, "BSC": ethAddress, "HECO": ethAddress};
   }
 
   /// ETH 导入助记词返回私钥 | ETH import mnemonic phrase and return private key
