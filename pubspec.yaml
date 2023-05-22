@@ -20,7 +20,7 @@ dependencies:
       url: 'https://gitee.com/batsoft888_admin/web3dart.git'
   bitcoin_flutter:
     git:
-      url: 'https://github.com/dart-bitcoin/bitcoin_flutter.git'
+      url: 'git@ice.github.com:IceThomas/bitcoin_flutter.git
       ref: 'master'
   typed_data: ^1.2.0
   rlp: ^2.0.0
